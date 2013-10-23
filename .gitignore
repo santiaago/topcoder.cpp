@@ -1,0 +1,22 @@
+# windows exe
+*.exe
+
+# emacs ignore
+*~
+
+# ignore out
+*.out
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
