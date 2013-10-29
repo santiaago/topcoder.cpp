@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
@@ -41,13 +42,22 @@ vector<string> Lottery::sortByOdds(vector<string> rules){
       sorted = (rest[0] == 'T')? true: false;
       unique = (rest[2] == 'T')? true: false;
       current_score = score(choices, blank, sorted, unique);
+      cout << "Current score: " << current_score << endl;
     }
     return rules;
 
 }
 
 long Lottery::score(int choices, int blank, bool sorted, bool unique){
-  cout << "score" << endl;
+  if(!sorted && !unique){
+    return pow(choices, blank);
+  } else if(!sorted && unique){
+    return 0;// N * N-1 * N-2 ... * N-M+1
+  } else if(sorted && unique){
+    return 0;// N * N-1 * N-2 ... * N-M+1/ M!
+  } else if( sorted && !unique){
+    return 0;// choces + blank -1 , blank, true, true
+  }
 }
 
 
