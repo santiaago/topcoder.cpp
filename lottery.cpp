@@ -12,6 +12,8 @@ public:
   vector<string> sortByOdds(vector<string> rules);
 private:
   long score(int choices, int blank, bool sorted, bool unique);
+  long Lotter::factorial(long n);
+  
 };
 
 vector<string> Lottery::sortByOdds(vector<string> rules){
@@ -56,10 +58,14 @@ long Lottery::score(int choices, int blank, bool sorted, bool unique){
   } else if(sorted && unique){
     return 0;// N * N-1 * N-2 ... * N-M+1/ M!
   } else if( sorted && !unique){
-    return 0;// choces + blank -1 , blank, true, true
+    return score(choices + blank - 1, blank, true, true);// choces + blank -1 , blank, true, true
   }
 }
 
+long Lotter::factorial(long n)
+{
+  return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
+}
 
 int main(){
   cout << "Lottery:" << endl;
