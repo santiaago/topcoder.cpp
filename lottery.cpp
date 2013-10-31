@@ -11,9 +11,9 @@ class Lottery{
 public:
   vector<string> sortByOdds(vector<string> rules);
 private:
-  long score(int choices, int blank, bool sorted, bool unique);
-  long Lotter::factorial(long n);
-  
+  double score(int choices, int blank, bool sorted, bool unique);
+  int factorial(int n);
+  int semi_factorial(int n, int m);
 };
 
 vector<string> Lottery::sortByOdds(vector<string> rules){
@@ -22,7 +22,7 @@ vector<string> Lottery::sortByOdds(vector<string> rules){
     string rule_name;
     int choices;
     int blank;
-    int current_score;
+    double current_score;
     string rest;
     bool sorted;
     bool unique;
@@ -50,22 +50,33 @@ vector<string> Lottery::sortByOdds(vector<string> rules){
 
 }
 
-long Lottery::score(int choices, int blank, bool sorted, bool unique){
+double Lottery::score(int choices, int blank, bool sorted, bool unique){
   if(!sorted && !unique){
-    return pow(choices, blank);
+    return double(1)/pow(choices, blank);
   } else if(!sorted && unique){
-    return 0;// N * N-1 * N-2 ... * N-M+1
+    return double(1)/semi_factorial(choices, choices - blank + 1);//0;// N * N-1 * N-2 ... * N-M+1
   } else if(sorted && unique){
-    return 0;// N * N-1 * N-2 ... * N-M+1/ M!
+    return double(1)/(double(semi_factorial(choices, choices - blank + 1 ) ) / factorial(blank)); //0;// N * N-1 * N-2 ... * N-M+1/ M!
   } else if( sorted && !unique){
-    return score(choices + blank - 1, blank, true, true);// choces + blank -1 , blank, true, true
+    return score(choices + blank - 1, blank, true, true);
   }
 }
 
-long Lotter::factorial(long n)
+int Lottery::factorial(int n)
 {
   return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
 }
+
+
+int Lottery::semi_factorial(int n, int m)
+{
+  
+  if(n == m){
+    return n;
+  }
+  return (n == 1 || n == 0) ? 1 : semi_factorial(n - 1, m) * n;
+}
+
 
 int main(){
   cout << "Lottery:" << endl;
