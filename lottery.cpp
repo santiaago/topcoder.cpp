@@ -19,42 +19,46 @@ private:
 };
 
 vector<string> Lottery::sortByOdds(vector<string> rules){
-    int colon;
-    
-    string rule_name;
-    int choices;
-    int blank;
-    double current_score;
-    string rest;
-    bool sorted;
-    bool unique;
-    vector< pair<double, string> > lottery_pairs;
 
-    for(int i = 0; i < rules.size(); ++i){
+  int colon; // position of ':' in string
+  int choices; // number of choices in lottery
+  int blank; // number of blanks in lottery
 
-      // name
-      colon = rules[i].find(':');
-      rule_name = rules[i].substr(0, colon);
-      // choices
-      rest = rules[i].substr(colon + 2, string::npos);
-      choices = atoi(rest.substr(0, rest.find(' ')).c_str());;
-      // blank
-      rest = rest.substr( rest.find(' ') + 1, string::npos);
-      blank = atoi(rest.substr(0, rest.find(' ')).c_str());
+  double current_score; // score of current rule
 
-      rest = rest.substr( rest.find(' ') + 1, string::npos);
-      // sorted and unique
-      sorted = (rest[0] == 'T')? true: false;
-      unique = (rest[2] == 'T')? true: false;
-      current_score = score(choices, blank, sorted, unique);
-      lottery_pairs.push_back(make_pair(current_score, rule_name));
-    }
-    sort(lottery_pairs.begin(), lottery_pairs.end());
-    vector<string> sorted_rules;
-    for(int i = 0; i < lottery_pairs.size(); ++i){
-      sorted_rules.push_back(lottery_pairs[i].second);
-    }
-    return sorted_rules;
+  string rule_name; // name of rule (aka lotto game)
+  string rest; // rest of string to continue parsing
+  
+  bool sorted;
+  bool unique;
+  
+  vector< pair<double, string> > lottery_pairs;
+  
+  for(int i = 0; i < rules.size(); ++i){
+
+    // name
+    colon = rules[i].find(':');
+    rule_name = rules[i].substr(0, colon);
+    // choices
+    rest = rules[i].substr(colon + 2, string::npos);
+    choices = atoi(rest.substr(0, rest.find(' ')).c_str());;
+    // blank
+    rest = rest.substr( rest.find(' ') + 1, string::npos);
+    blank = atoi(rest.substr(0, rest.find(' ')).c_str());
+
+    rest = rest.substr( rest.find(' ') + 1, string::npos);
+    // sorted and unique
+    sorted = (rest[0] == 'T')? true: false;
+    unique = (rest[2] == 'T')? true: false;
+    current_score = score(choices, blank, sorted, unique);
+    lottery_pairs.push_back(make_pair(current_score, rule_name));
+  }
+  sort(lottery_pairs.begin(), lottery_pairs.end());
+  vector<string> sorted_rules;
+  for(int i = 0; i < lottery_pairs.size(); ++i){
+    sorted_rules.push_back(lottery_pairs[i].second);
+  }
+  return sorted_rules;
 
 }
 
