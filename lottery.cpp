@@ -32,7 +32,6 @@ vector<string> Lottery::sortByOdds(vector<string> rules){
 
     for(int i = 0; i < rules.size(); ++i){
 
-      cout << rules[i] << endl;
       // name
       colon = rules[i].find(':');
       rule_name = rules[i].substr(0, colon);
@@ -48,15 +47,14 @@ vector<string> Lottery::sortByOdds(vector<string> rules){
       sorted = (rest[0] == 'T')? true: false;
       unique = (rest[2] == 'T')? true: false;
       current_score = score(choices, blank, sorted, unique);
-      cout << "Current score: " << current_score << endl;
       lottery_pairs.push_back(make_pair(current_score, rule_name));
     }
     sort(lottery_pairs.begin(), lottery_pairs.end());
-    cout << "sorted" << endl;
+    vector<string> sorted_rules;
     for(int i = 0; i < lottery_pairs.size(); ++i){
-      cout << lottery_pairs[i].second << " " << lottery_pairs[i].first << endl;
+      sorted_rules.push_back(lottery_pairs[i].second);
     }
-    return rules;
+    return sorted_rules;
 
 }
 
@@ -80,44 +78,33 @@ double Lottery::factorial(int n)
 
 double Lottery::semi_factorial(int n, int m)
 {
-  cout << n << " * ";
   if(n == m){
     return n;
   }
   return (n == 1 || n == 0) ? 1 : semi_factorial(n - 1, m) * n;
 }
 
-
-double semi_factorial(int n, int m)
-{
-  if(n == m){
-    cout << n << " * ";
-    return n;
-  }
-  if(n == 1 || n == 0){
-    return 1;
-  } else {
-    cout << n << " * ";
-    return semi_factorial(n - 1, m) * n;
- }
-  return (n == 1 || n == 0) ? 1 : semi_factorial(n - 1, m) * n;
+void print_vector(vector<string> &vect){
+  for(int i = 0; i < vect.size(); ++i)
+    cout << vect[i] << endl;
 }
 
 void test_1(){
-  cout << "test_1:" << endl;
+  cout << endl << "test_1:" << endl << endl;
 
   vector<string> rules;
   rules.push_back("PICK ANY TWO: 10 2 F F");
   rules.push_back("PICK TWO IN ORDER: 10 2 T F");
   rules.push_back("PICK TWO DIFFERENT: 10 2 F T");
   rules.push_back("PICK TWO LIMITED: 10 2 T T");
-  Lottery *loto = new Lottery();
-  loto->sortByOdds(rules);
+  Lottery *lotto = new Lottery();
+  vector<string> v = lotto->sortByOdds(rules);
+  print_vector(v);
 }
 
 
 void test_2(){
-  cout << "test_2:" << endl;
+  cout << endl << "test_2:" << endl << endl;
 
   vector<string> rules;
   rules.push_back("INDIGO: 93 8 T F");
@@ -128,15 +115,25 @@ void test_2(){
   rules.push_back( "GREEN: 78 6 F T");
   rules.push_back( "YELLOW: 75 6 F F");
 
-  Lottery *loto = new Lottery();
-  loto->sortByOdds(rules);
+  Lottery *lotto = new Lottery();
+  vector<string> v = lotto->sortByOdds(rules);
+  print_vector(v);
+}
+
+void test_3(){
+  cout << endl << "test_3:" << endl << endl;
+
+  vector<string> rules;
+
+  Lottery *lotto = new Lottery();
+  vector<string> v = lotto->sortByOdds(rules);
+  print_vector(v);
+
 }
 
 int main(){
-  // double a = semi_factorial(29,29 -8 + 1);
-  // cout << endl;
-  // cout << a << endl;
   cout << "Lottery:" << endl;
   test_1();
   test_2();
+  test_3();
 }
